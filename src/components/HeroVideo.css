@@ -1,0 +1,163 @@
+/* ============================================================
+   Vídeo em destaque (primeira dobra e seção Sobre)
+   ============================================================ */
+
+.hvideo {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  isolation: isolate;
+  background: #2c110c;
+  border-radius: var(--r-xs);
+}
+
+.hvideo__el {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- Controles ----------
+   Uma linha só: pausar/retomar e a barra de posição. Fica discreta em
+   repouso e ganha presença no hover ou com foco no teclado. */
+
+.hvideo__controls {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 1vw, 14px);
+  padding: 22px clamp(10px, 1.2vw, 16px) clamp(10px, 1.2vw, 14px);
+  background: linear-gradient(0deg, rgba(20, 8, 5, 0.68) 0%, transparent 100%);
+  opacity: 0.5;
+  transition: opacity var(--dur-sm) var(--ease-out);
+}
+
+.hvideo:hover .hvideo__controls,
+.hvideo__controls:focus-within {
+  opacity: 1;
+}
+
+.hvideo__toggle {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--r-pill);
+  border: 1px solid rgba(255, 248, 245, 0.38);
+  background: rgba(45, 17, 12, 0.45);
+  backdrop-filter: blur(7px);
+  color: var(--on-dark);
+  transition: background-color var(--t-fast) linear, border-color var(--t-fast) linear,
+    color var(--t-fast) linear, transform var(--dur-sm) var(--ease-out);
+}
+
+.hvideo__toggle svg {
+  width: 13px;
+  height: 13px;
+}
+
+.hvideo__toggle:hover {
+  transform: scale(1.06);
+  border-color: transparent;
+  background: var(--pink);
+  color: var(--brown-night);
+}
+
+/* ---------- Barra de posição ---------- */
+
+.hvideo__seek {
+  flex: 1;
+  min-width: 0;
+  height: 20px;
+  margin: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+/* WebKit: a parte preenchida vem de um degradê com a variável --seek */
+
+.hvideo__seek::-webkit-slider-runnable-track {
+  height: 3px;
+  border-radius: var(--r-pill);
+  background: linear-gradient(
+    90deg,
+    var(--pink) var(--seek, 0%),
+    rgba(255, 248, 245, 0.32) var(--seek, 0%)
+  );
+}
+
+.hvideo__seek::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  margin-top: -4.5px;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--on-dark);
+  box-shadow: 0 1px 4px rgba(12, 4, 2, 0.5);
+}
+
+/* Firefox tem trilha e progresso separados */
+
+.hvideo__seek::-moz-range-track {
+  height: 3px;
+  border-radius: var(--r-pill);
+  background: rgba(255, 248, 245, 0.32);
+}
+
+.hvideo__seek::-moz-range-progress {
+  height: 3px;
+  border-radius: var(--r-pill);
+  background: var(--pink);
+}
+
+.hvideo__seek::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--on-dark);
+  box-shadow: 0 1px 4px rgba(12, 4, 2, 0.5);
+}
+
+.hvideo__seek:focus-visible {
+  outline: 2px solid var(--pink);
+  outline-offset: 2px;
+  border-radius: var(--r-pill);
+}
+
+/* ---------- Sem hover (toque): controles sempre visíveis ---------- */
+
+@media (pointer: coarse) {
+  .hvideo__controls {
+    opacity: 1;
+  }
+
+  .hvideo__toggle {
+    width: 36px;
+    height: 36px;
+  }
+
+  /* Alvo de toque maior na barra, sem engrossar o traço desenhado */
+  .hvideo__seek {
+    height: 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hvideo__controls,
+  .hvideo__toggle {
+    transition: none;
+  }
+}

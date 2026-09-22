@@ -1,0 +1,14 @@
+/* ============================================================
+   O que fazemos
+   ============================================================ */
+
+.works-sec__title {
+  margin-top: 20px;
+}
+
+/* O carrossel sangra até as bordas da tela; a barra de controle
+   volta a alinhar com a coluna de conteúdo. */
+
+.works-sec .works {
+  margin-top: clamp(4px, 1vw, 14px);
+}

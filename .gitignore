@@ -1,0 +1,9 @@
+node_modules
+dist
+*.local
+.DS_Store
+*.tsbuildinfo
+.vite
+
+# Backup de mídia original (não faz parte do site publicado)
+_originais-midia/

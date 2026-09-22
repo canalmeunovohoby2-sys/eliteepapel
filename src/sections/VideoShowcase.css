@@ -1,0 +1,62 @@
+/* ============================================================
+   Vídeos
+   Quatro verticais em uma linha no desktop, dois por linha em
+   telas médias e no mobile. Grade fixa: o alinhamento nunca
+   escorrega, mesmo que algum arquivo ainda não tenha chegado.
+   ============================================================ */
+
+.vshow {
+  overflow: hidden;
+}
+
+.vshow::before {
+  content: '';
+  position: absolute;
+  top: -12%;
+  left: 50%;
+  width: min(900px, 80vw);
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(251, 101, 138, 0.14) 0%, transparent 66%);
+  pointer-events: none;
+}
+
+.vshow .section-head {
+  position: relative;
+}
+
+.vshow__grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  /* O vão é maior que a soma das molduras vizinhas, para as bordas de papel
+     não se encostarem. As colunas seguem alinhadas. */
+  gap: clamp(22px, 2.4vw, 38px);
+}
+
+.vshow__item {
+  min-width: 0;
+}
+
+/* ============================================================
+   Responsivo
+   ============================================================ */
+
+/* Abaixo de 1150px quatro colunas ficariam apertadas: dois por linha. */
+
+@media (max-width: 1150px) {
+  .vshow__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: clamp(560px, 80vw, 880px);
+    margin-inline: auto;
+    gap: clamp(26px, 3.4vw, 48px);
+  }
+}
+
+@media (max-width: 699px) {
+  .vshow__grid {
+    max-width: none;
+    gap: 20px;
+  }
+}

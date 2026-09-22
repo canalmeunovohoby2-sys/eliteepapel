@@ -1,0 +1,217 @@
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 250;
+  display: grid;
+  place-items: center;
+  padding: clamp(0px, 2vw, 28px);
+}
+
+.lightbox__backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(45, 17, 12, 0.9);
+  backdrop-filter: blur(14px);
+  cursor: default;
+  animation: lightbox-fade 260ms var(--ease) both;
+}
+
+.lightbox__panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  max-width: min(1180px, 100%);
+  max-height: 100%;
+  touch-action: pan-y;
+  animation: lightbox-in 340ms var(--ease-out) both;
+}
+
+@keyframes lightbox-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes lightbox-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.lightbox__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 14px;
+  flex: none;
+}
+
+.lightbox__meta {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  min-width: 0;
+}
+
+.lightbox__caption {
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+  color: var(--on-dark);
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lightbox__counter {
+  flex: none;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: var(--on-dark-mute);
+  font-variant-numeric: tabular-nums;
+}
+
+.lightbox__close {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border: 1px solid var(--line-dark);
+  border-radius: var(--r-pill);
+  color: var(--on-dark);
+  transition: background-color var(--t-fast) linear, border-color var(--t-fast) linear,
+    transform var(--t-base) var(--ease);
+}
+
+.lightbox__close svg {
+  width: 19px;
+  height: 19px;
+}
+
+.lightbox__close:hover {
+  border-color: transparent;
+  background: var(--pink);
+  color: var(--brown-night);
+  transform: rotate(90deg);
+}
+
+.lightbox__body {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  padding-inline: clamp(0px, 4vw, 76px);
+}
+
+.lightbox__body img,
+.lightbox__body video {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: var(--r-xs);
+  user-select: none;
+}
+
+.lightbox__nav {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.lightbox__arrow {
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  flex: none;
+  pointer-events: auto;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--line-dark);
+  background: rgba(45, 17, 12, 0.45);
+  backdrop-filter: blur(8px);
+  color: var(--on-dark);
+  transition: background-color var(--t-fast) linear, border-color var(--t-fast) linear,
+    transform var(--t-base) var(--ease);
+}
+
+.lightbox__arrow svg {
+  width: 20px;
+  height: 20px;
+}
+
+.lightbox__arrow:hover {
+  border-color: transparent;
+  background: var(--pink);
+  color: var(--brown-night);
+  transition-duration: var(--t-fast);
+}
+
+.lightbox__arrow:first-child:hover {
+  transform: translateX(-3px);
+}
+
+.lightbox__arrow:last-child:hover {
+  transform: translateX(3px);
+}
+
+/* Mobile: navegação vira uma linha abaixo da imagem, sem cobrir o conteúdo */
+
+@media (max-width: 700px) {
+  .lightbox {
+    padding: 0;
+  }
+
+  .lightbox__panel {
+    max-width: 100%;
+    padding: 16px 0 22px;
+  }
+
+  .lightbox__bar {
+    padding: 0 18px 12px;
+  }
+
+  .lightbox__caption {
+    font-size: 1rem;
+    white-space: normal;
+  }
+
+  .lightbox__body {
+    padding-inline: 14px;
+    padding-bottom: 4px;
+  }
+
+  .lightbox__nav {
+    position: static;
+    inset: auto;
+    justify-content: center;
+    gap: 14px;
+    padding: 18px 0 0;
+  }
+
+  .lightbox__arrow {
+    width: 54px;
+    height: 54px;
+    background: transparent;
+  }
+}

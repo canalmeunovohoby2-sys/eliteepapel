@@ -1,0 +1,66 @@
+.wfloat {
+  position: fixed;
+  right: clamp(16px, 2.4vw, 34px);
+  bottom: clamp(16px, 2.4vw, 34px);
+  z-index: 180;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px 12px 14px;
+  border-radius: var(--r-pill);
+  background: var(--pink);
+  color: var(--brown-night);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  box-shadow: 0 12px 30px rgba(227, 65, 106, 0.32);
+  opacity: 0;
+  transform: translateY(14px);
+  pointer-events: none;
+  transition: opacity var(--t-base) var(--ease), transform var(--t-base) var(--ease),
+    background-color var(--t-fast) linear, box-shadow var(--t-base) var(--ease);
+}
+
+.wfloat.is-visible {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.wfloat:hover {
+  background: var(--pink-bright);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px rgba(227, 65, 106, 0.38);
+}
+
+.wfloat__icon {
+  width: 21px;
+  height: 21px;
+  flex: none;
+}
+
+@media (max-width: 560px) {
+  .wfloat {
+    padding: 0;
+    width: 56px;
+    height: 56px;
+    justify-content: center;
+  }
+
+  .wfloat__label {
+    display: none;
+  }
+
+  .wfloat__icon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wfloat {
+    transition: opacity var(--t-fast) linear;
+    transform: none;
+  }
+}

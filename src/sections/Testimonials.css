@@ -1,0 +1,151 @@
+/* ============================================================
+   Depoimentos — citações editoriais
+   Sem cards, sem estrelas, sem caixas. A frase é o elemento.
+   ============================================================ */
+
+.tst__title {
+  margin-top: 20px;
+}
+
+/* ---------- Aviso de conteúdo de exemplo ----------
+   Só existe enquanto TESTIMONIALS_ARE_PLACEHOLDER for true. */
+
+.tst__notice {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: clamp(30px, 3.4vw, 48px);
+  padding: 9px 16px;
+  border: 1px dashed rgba(124, 50, 39, 0.3);
+  border-radius: var(--r-pill);
+  font-size: 0.63rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+.tst__notice span {
+  width: 5px;
+  height: 5px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--pink);
+}
+
+/* ---------- Lista ---------- */
+
+.tst__list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(30px, 3.6vw, 62px);
+  align-items: start;
+}
+
+/* Colunas desalinhadas de propósito: composição, não grade */
+
+.tst__item:nth-child(2) {
+  margin-top: clamp(0px, 3.4vw, 54px);
+}
+
+.tst__item {
+  position: relative;
+  padding-top: clamp(24px, 2.6vw, 36px);
+  border-top: 1px solid var(--line);
+}
+
+/* Marca rosa sobre a régua, como nos passos do processo */
+
+.tst__item::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: clamp(30px, 3.2vw, 46px);
+  height: 1px;
+  background: var(--pink);
+}
+
+/* Aspas grandes na serifada de acento */
+
+.tst__mark {
+  display: block;
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: clamp(2.6rem, 4vw, 3.6rem);
+  line-height: 0.6;
+  color: var(--pink-soft);
+}
+
+.tst__quote {
+  margin-top: clamp(8px, 1vw, 14px);
+}
+
+.tst__quote p {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: clamp(1.12rem, 1.5vw, 1.4rem);
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--brown);
+  text-wrap: pretty;
+}
+
+.tst__who {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: clamp(18px, 2vw, 26px);
+}
+
+.tst__name {
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+
+.tst__place {
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--brown-soft);
+}
+
+/* ============================================================
+   Responsivo
+   ============================================================ */
+
+@media (max-width: 900px) {
+  .tst__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(30px, 5vw, 44px);
+  }
+
+  .tst__item:nth-child(2) {
+    margin-top: 0;
+  }
+
+  /* Terceiro item ocupa a linha inteira, como fecho */
+  .tst__item:nth-child(3) {
+    grid-column: 1 / -1;
+    max-width: 46ch;
+  }
+}
+
+@media (max-width: 699px) {
+  .tst__list {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(28px, 7vw, 38px);
+  }
+
+  .tst__item:nth-child(3) {
+    max-width: none;
+  }
+
+  .tst__quote p {
+    font-size: 1.1rem;
+  }
+}

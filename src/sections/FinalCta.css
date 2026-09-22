@@ -1,0 +1,81 @@
+/* ============================================================
+   Chamada final
+   ============================================================ */
+
+.fcta {
+  overflow: hidden;
+}
+
+.fcta::before {
+  content: '';
+  position: absolute;
+  bottom: -40%;
+  right: -10%;
+  width: min(720px, 70vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(251, 101, 138, 0.2) 0%, transparent 68%);
+  pointer-events: none;
+}
+
+.fcta__inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(32px, 4.4vw, 84px);
+  align-items: end;
+}
+
+.fcta__title {
+  margin-top: 22px;
+  font-size: var(--fs-h2);
+  color: var(--on-dark);
+  max-width: 13em;
+}
+
+.fcta__title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--pink-soft);
+}
+
+.fcta__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 28px;
+}
+
+.fcta__text {
+  font-size: var(--fs-lead);
+  line-height: 1.8;
+  color: var(--on-dark-soft);
+  max-width: 44ch;
+}
+
+/* ============================================================
+   Responsivo
+   ============================================================ */
+
+@media (max-width: 900px) {
+  .fcta__inner {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 28px;
+  }
+
+  .fcta__title {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 560px) {
+  .fcta__body {
+    width: 100%;
+    gap: 24px;
+  }
+
+  .fcta__body .btn {
+    width: 100%;
+  }
+}

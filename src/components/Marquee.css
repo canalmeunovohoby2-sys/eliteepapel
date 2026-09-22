@@ -1,0 +1,119 @@
+/* ============================================================
+   Faixa de assinatura da marca
+
+   Legenda centralizada acima, e logo abaixo a faixa com as categorias
+   correndo continuamente da esquerda para a direita. Não é uma lista de
+   etiquetas: é tipografia display em escala grande, sobre um material
+   levemente diferente do hero, com um fio rosa esmaecendo nas pontas.
+   ============================================================ */
+
+.marquee {
+  --mq-gap: clamp(26px, 3.6vw, 64px);
+
+  background: var(--cream);
+}
+
+.marquee__caption {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  padding-top: clamp(6px, 1vw, 14px);
+  padding-bottom: clamp(20px, 2.4vw, 30px);
+  text-align: center;
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--brown-soft);
+}
+
+.marquee__band {
+  position: relative;
+  padding-block: clamp(20px, 2.4vw, 32px);
+  background: var(--paper);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+/* Fio rosa que se dissolve nas extremidades — detalhe de marca, não borda */
+
+.marquee__band::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(251, 101, 138, 0.55) 22%,
+    rgba(251, 101, 138, 0.55) 78%,
+    transparent 100%
+  );
+}
+
+.marquee__view {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+}
+
+.marquee__track {
+  display: flex;
+  width: max-content;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+.marquee__group {
+  display: flex;
+  align-items: center;
+  flex: none;
+}
+
+.marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mq-gap);
+  padding-right: var(--mq-gap);
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2.2vw, 1.9rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.022em;
+  color: var(--ink);
+  white-space: nowrap;
+  transition: color var(--dur-md) var(--ease-out);
+}
+
+/* Ao passar o mouse a faixa desacelera e o texto aquece para o marrom */
+
+.marquee:hover .marquee__item {
+  color: var(--brown);
+}
+
+/* Separador: losango discreto derivado da identidade */
+
+.marquee__item::after {
+  content: '';
+  width: clamp(5px, 0.55vw, 8px);
+  height: clamp(5px, 0.55vw, 8px);
+  flex: none;
+  background: var(--pink);
+  transform: rotate(45deg);
+  opacity: 0.9;
+}
+
+/* ============================================================
+   Responsivo
+   ============================================================ */
+
+@media (max-width: 699px) {
+  .marquee {
+    --mq-gap: 22px;
+  }
+
+  .marquee__item {
+    font-size: 1.18rem;
+  }
+}

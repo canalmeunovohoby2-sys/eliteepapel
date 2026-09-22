@@ -1,0 +1,118 @@
+/* ============================================================
+   ELIARTE & PAPEL — Design tokens
+   Identidade: rosa #FB658A + marrom #7C3227
+   Derivados: creme/papel, off-white, marrom profundo, rosa suave
+   ============================================================ */
+
+:root {
+  /* --- Marca (valores originais — não alterar) --- */
+  --brand-pink: #fb658a;
+  --brand-brown: #7c3227;
+
+  /* --- Rosa derivado --- */
+  --pink: var(--brand-pink);
+  --pink-bright: #ff7c9c;
+  --pink-deep: #e3416a;
+  --pink-ink: #b92c53;
+  --pink-soft: #fbcbd7;
+  --pink-tint: #fff2f6;
+  --pink-veil: rgba(251, 101, 138, 0.14);
+
+  /* --- Marrom derivado --- */
+  --brown: var(--brand-brown);
+  --brown-deep: #5a2319;
+  --brown-night: #3d1811;
+  --brown-soft: #a35a4a;
+  --brown-mute: #bb8f84;
+
+  /* --- Papel / neutros quentes --- */
+  --white: #ffffff;
+  --cream: #fdfaf7;
+  --paper: #f8f1ea;
+  --paper-warm: #f3e8df;
+  --paper-deep: #e9dbd0;
+
+  /* --- Texto sobre claro --- */
+  --ink: #2b1a16;
+  --ink-soft: #5c453e;
+  --ink-mute: #8b766e;
+
+  /* --- Texto sobre escuro --- */
+  --on-dark: #fff8f5;
+  --on-dark-soft: rgba(255, 248, 245, 0.76);
+  --on-dark-mute: rgba(255, 248, 245, 0.58);
+
+  /* --- Linhas --- */
+  --line: rgba(124, 50, 39, 0.16);
+  --line-soft: rgba(124, 50, 39, 0.09);
+  --line-strong: rgba(124, 50, 39, 0.3);
+  --line-dark: rgba(255, 248, 245, 0.18);
+  --line-dark-soft: rgba(255, 248, 245, 0.1);
+
+  /* --- Tipografia ---
+     Bricolage Grotesque (display: grotesca contemporânea, com caráter)
+     + Instrument Serif itálico (acentos e palavras de ênfase)
+     + Manrope (texto corrido e miúdos).
+
+     Nenhum serifado em título inteiro: a serifada entra só na palavra de
+     acento, dentro de uma headline sans. É o contraste que dá o ar editorial.
+     A sans display tem personalidade de estúdio criativo — nada de Arial. */
+
+  --font-display: 'Bricolage Grotesque', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-accent: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --font-body: 'Manrope', 'Segoe UI', system-ui, -apple-system, sans-serif;
+
+  --fw-display: 400;
+  --fw-heading: 500;
+  --fw-body: 430;
+  --fw-small: 500;
+
+  --fs-hero: clamp(2.4rem, 5.4vw, 4.5rem);
+  --fs-h2: clamp(1.85rem, 3.3vw, 2.85rem);
+  --fs-h3: clamp(1.22rem, 1.66vw, 1.5rem);
+  --fs-h4: clamp(1.04rem, 1.25vw, 1.18rem);
+  --fs-lead: clamp(1.02rem, 1.12vw, 1.15rem);
+  --fs-body: 1rem;
+  --fs-small: 0.9rem;
+  --fs-label: 0.7rem;
+
+  --track-label: 0.22em;
+  --track-tight: -0.032em;
+
+  /* --- Layout --- */
+  --container: 1280px;
+  --container-wide: 1440px;
+  --gutter: clamp(20px, 4.4vw, 60px);
+  --section-y: clamp(74px, 8.6vw, 146px);
+  --nav-h: 84px;
+
+  /* --- Raios (sóbrios, de papelaria) --- */
+  --r-xs: 3px;
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 16px;
+  --r-pill: 999px;
+
+  /* --- Sombras discretas, sempre em tom marrom --- */
+  --shadow-xs: 0 1px 2px rgba(60, 23, 18, 0.05);
+  --shadow-sm: 0 2px 6px rgba(60, 23, 18, 0.05), 0 14px 32px rgba(60, 23, 18, 0.05);
+  --shadow-md: 0 22px 56px rgba(60, 23, 18, 0.1);
+  --shadow-lg: 0 40px 96px rgba(60, 23, 18, 0.16);
+  --shadow-pink: 0 14px 32px rgba(251, 101, 138, 0.26);
+
+  /* --- Movimento ---
+     Sistema único: ease-out, durações curtas/médias, deslocamentos pequenos. */
+
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 0.84, 0.44, 1);
+  --ease-soft: cubic-bezier(0.4, 0.14, 0.3, 1);
+
+  --dur-xs: 200ms;
+  --dur-sm: 400ms;
+  --dur-md: 660ms;
+  --dur-lg: 900ms;
+
+  --t-fast: 180ms;
+  --t-base: 320ms;
+  --t-slow: 620ms;
+}

@@ -1,0 +1,627 @@
+/* ============================================================
+   ELIARTE & PAPEL — Base global
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-body);
+  line-height: 1.7;
+  color: var(--ink);
+  background-color: var(--cream);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+body.is-locked {
+  overflow: hidden;
+}
+
+img,
+svg,
+video,
+iframe {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+::selection {
+  background: var(--brown);
+  color: var(--on-dark);
+}
+
+:focus-visible {
+  outline: 2px solid var(--pink-deep);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.section--dark :focus-visible,
+.section--deep :focus-visible,
+.footer :focus-visible {
+  outline-color: var(--pink);
+}
+
+[id] {
+  scroll-margin-top: calc(var(--nav-h) + 16px);
+}
+
+/* ---------- Tipografia ---------- */
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: var(--fw-heading);
+  line-height: 1.05;
+  letter-spacing: var(--track-tight);
+  text-wrap: balance;
+}
+
+/* Acento editorial: a palavra de ênfase dentro da headline troca para a
+   serifada de contraste. Um único gesto tipográfico, aplicado sempre igual. */
+
+h1 em,
+h2 em,
+h3 em,
+h4 em {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.06em;
+  letter-spacing: 0;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+strong {
+  font-weight: 600;
+}
+
+/* ---------- Layout ---------- */
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: var(--section-y);
+  position: relative;
+}
+
+.section--cream {
+  background: var(--cream);
+  color: var(--ink);
+}
+
+.section--white {
+  background: var(--white);
+  color: var(--ink);
+}
+
+.section--paper {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.section--deep {
+  background: var(--brown-night);
+  color: var(--on-dark);
+}
+
+.section--tint {
+  background: var(--pink-tint);
+  color: var(--ink);
+}
+
+/* ---------- Detalhes editoriais ---------- */
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--brown-soft);
+}
+
+.eyebrow::before {
+  content: '';
+  width: 26px;
+  height: 1px;
+  flex: none;
+  background: var(--pink);
+}
+
+.section--deep .eyebrow {
+  color: var(--on-dark-soft);
+}
+
+.eyebrow--bare::before {
+  display: none;
+}
+
+.italic-accent {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.06em;
+  letter-spacing: 0;
+  color: var(--pink-ink);
+}
+
+.section--deep .italic-accent {
+  color: var(--pink-soft);
+}
+
+.section-head {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  margin-bottom: clamp(44px, 5vw, 78px);
+}
+
+.section-head--center {
+  align-items: center;
+  text-align: center;
+}
+
+.section-head--center .eyebrow {
+  justify-content: center;
+}
+
+.section-head--split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(26px, 4vw, 72px);
+  align-items: end;
+}
+
+.section-head--split > * {
+  min-width: 0;
+}
+
+.section-title {
+  font-size: var(--fs-h2);
+  max-width: 14em;
+}
+
+.section-head--center .section-title {
+  max-width: 17em;
+}
+
+.section-title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--pink-deep);
+}
+
+.section--deep .section-title em {
+  color: var(--pink-soft);
+}
+
+.section-head p,
+.lead {
+  font-size: var(--fs-lead);
+  line-height: 1.75;
+  color: var(--ink-soft);
+  max-width: 58ch;
+}
+
+.section--deep .section-head p,
+.section--deep .lead {
+  color: var(--on-dark-soft);
+}
+
+.rule {
+  height: 1px;
+  width: 100%;
+  background: var(--line);
+}
+
+.section--deep .rule {
+  background: var(--line-dark);
+}
+
+/* ---------- Botões ---------- */
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 54px;
+  padding: 15px 30px;
+  border-radius: var(--r-sm);
+  font-family: var(--font-body);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  isolation: isolate;
+  background: transparent;
+  transition: background-color var(--t-fast) linear, border-color var(--t-fast) linear,
+    color var(--t-fast) linear, transform var(--t-base) var(--ease),
+    box-shadow var(--t-base) var(--ease);
+}
+
+.btn svg {
+  width: 17px;
+  height: 17px;
+  flex: none;
+  transition: transform var(--t-base) var(--ease);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+/* Botão principal: rosa da identidade com texto marrom profundo.
+   Mantém a cor exata da marca e garante contraste confortável. */
+
+.btn--primary {
+  background: var(--pink);
+  color: var(--brown-night);
+  box-shadow: var(--shadow-pink);
+}
+
+/* Brilho extremamente discreto, apenas no hover */
+
+.btn--primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 34%,
+    rgba(255, 255, 255, 0.36) 50%,
+    transparent 66%
+  );
+  transform: translateX(-140%);
+  transition: transform 900ms var(--ease-out);
+  pointer-events: none;
+}
+
+.btn--primary:hover {
+  background: var(--pink-bright);
+  box-shadow: 0 16px 38px rgba(251, 101, 138, 0.34);
+}
+
+.btn--primary:hover::after {
+  transform: translateX(140%);
+}
+
+.btn--primary:hover svg {
+  transform: translateX(3px);
+}
+
+.btn--outline {
+  border: 1px solid var(--line-strong);
+  color: var(--ink);
+}
+
+.btn--outline:hover {
+  border-color: var(--brown);
+  background: rgba(124, 50, 39, 0.04);
+}
+
+.btn--ghost {
+  border: 1px solid var(--line-dark);
+  color: var(--on-dark);
+}
+
+.btn--ghost:hover {
+  border-color: rgba(255, 248, 245, 0.45);
+  background: rgba(255, 248, 245, 0.06);
+}
+
+.btn--quiet {
+  min-height: 40px;
+  padding: 0;
+  gap: 8px;
+  color: var(--brown);
+  box-shadow: none;
+}
+
+.btn--quiet:hover {
+  color: var(--pink-ink);
+  transform: none;
+}
+
+.btn--quiet::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 6px;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform-origin: left;
+  transform: scaleX(1);
+  opacity: 0.35;
+  transition: opacity var(--t-base) var(--ease);
+}
+
+.btn--quiet:hover::after {
+  opacity: 1;
+}
+
+.btn--sm {
+  min-height: 44px;
+  padding: 11px 22px;
+  font-size: 0.7rem;
+}
+
+.btn--block {
+  width: 100%;
+}
+
+/* ---------- Acessibilidade ---------- */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 14px;
+  left: 14px;
+  z-index: 400;
+  padding: 13px 20px;
+  border-radius: var(--r-sm);
+  background: var(--brown);
+  color: var(--on-dark);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(-180%);
+  transition: transform var(--t-base) var(--ease), opacity var(--t-fast) linear;
+}
+
+.skip-link:focus-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Moldura editorial ----------
+   Passe-partout de papel: fio de impressão na borda da mídia, margem de
+   papel quente, fio externo fechando o quadro e marca rosa sobre o fio
+   inferior. Usada na primeira dobra e na seção Sobre.
+
+   Tudo em camadas de box-shadow: a moldura não ocupa espaço no layout,
+   então o formato da mídia nunca é distorcido. */
+
+.mframe {
+  --mframe-mat: clamp(9px, 1.05vw, 15px);
+
+  position: relative;
+  flex: none;
+  width: auto;
+  border-radius: var(--r-xs);
+  box-shadow:
+    0 0 0 1px rgba(124, 50, 39, 0.2),
+    0 0 0 calc(1px + var(--mframe-mat)) var(--paper-warm),
+    0 0 0 calc(2px + var(--mframe-mat)) rgba(124, 50, 39, 0.17),
+    0 30px 68px rgba(60, 23, 18, 0.15);
+}
+
+.mframe::after {
+  content: '';
+  position: absolute;
+  bottom: calc(-1px - var(--mframe-mat) - 1px);
+  left: 0;
+  width: clamp(46px, 4.6vw, 74px);
+  height: 1px;
+  background: var(--pink);
+  pointer-events: none;
+}
+
+/* ---------- Mídia ---------- */
+
+.media {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--paper-warm);
+  border-radius: var(--r-xs);
+  aspect-ratio: var(--media-ratio, auto);
+}
+
+.media__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1000ms var(--ease-out);
+}
+
+.media__backdrop {
+  position: absolute;
+  inset: -8%;
+  width: 116%;
+  height: 116%;
+  object-fit: cover;
+  filter: blur(46px) brightness(0.9) saturate(1.05);
+  transform: scale(1.1);
+  pointer-events: none;
+}
+
+.media--contain .media__img {
+  position: relative;
+  z-index: 1;
+  object-fit: contain;
+}
+
+.media--zoom:hover .media__img {
+  transform: scale(1.04);
+}
+
+/* Placeholder editorial — não é imagem fictícia, é um slot sinalizado */
+
+.media__ph {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 22px;
+  background: linear-gradient(150deg, var(--paper) 0%, var(--paper-warm) 52%, var(--paper-deep) 100%);
+}
+
+.media__ph::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(124, 50, 39, 0.05) 0 1px,
+    transparent 1px 11px
+  );
+  mask-image: radial-gradient(130% 110% at 25% 0%, #000 30%, transparent 88%);
+}
+
+.media__ph::after {
+  content: '';
+  position: absolute;
+  inset: 10px;
+  border: 1px solid rgba(124, 50, 39, 0.14);
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.media__ph-tag {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  max-width: 90%;
+  padding: 9px 16px;
+  border: 1px dashed rgba(124, 50, 39, 0.28);
+  border-radius: var(--r-pill);
+  background: rgba(253, 250, 247, 0.86);
+  font-size: 0.63rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  text-align: center;
+  line-height: 1.5;
+}
+
+.media__ph-tag i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex: none;
+  background: var(--pink);
+}
+
+.media--on-dark .media__ph {
+  background: linear-gradient(150deg, #4a1e16 0%, var(--brown-night) 60%, #2c110c 100%);
+}
+
+.media--on-dark .media__ph::before {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 248, 245, 0.05) 0 1px,
+    transparent 1px 11px
+  );
+}
+
+.media--on-dark .media__ph::after {
+  border-color: rgba(255, 248, 245, 0.12);
+}
+
+.media--on-dark .media__ph-tag {
+  border-color: rgba(255, 248, 245, 0.24);
+  background: rgba(45, 17, 12, 0.5);
+  color: var(--on-dark-mute);
+}
+
+/* ---------- Responsivo ---------- */
+
+@media (max-width: 900px) {
+  .section-head--split {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 560px) {
+  .btn {
+    min-height: 52px;
+    padding: 14px 24px;
+    letter-spacing: 0.12em;
+  }
+}

@@ -1,0 +1,284 @@
+/* ============================================================
+   Header
+   ============================================================ */
+
+.hdr {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  background: transparent;
+  transition: background-color var(--t-base) var(--ease), backdrop-filter var(--t-base) var(--ease);
+}
+
+.hdr::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--line-soft);
+  opacity: 0;
+  transition: opacity var(--t-base) var(--ease);
+}
+
+.hdr.is-scrolled {
+  background: rgba(253, 250, 247, 0.88);
+  backdrop-filter: blur(16px) saturate(1.2);
+}
+
+.hdr.is-scrolled::after {
+  opacity: 1;
+}
+
+.hdr__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 26px;
+  width: 100%;
+}
+
+.hdr__logo {
+  justify-self: start;
+}
+
+.hdr__nav {
+  justify-self: center;
+}
+
+.hdr__list {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 1.7vw, 28px);
+}
+
+.hdr__link {
+  position: relative;
+  display: inline-block;
+  padding-block: 6px;
+  font-size: 0.71rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  transition: color var(--t-fast) linear;
+}
+
+.hdr__link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--pink);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--t-base) var(--ease);
+}
+
+.hdr__link:hover,
+.hdr__link[aria-current='true'] {
+  color: var(--brown);
+}
+
+.hdr__link:hover::after,
+.hdr__link[aria-current='true']::after {
+  transform: scaleX(1);
+}
+
+.hdr__actions {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hdr__burger {
+  display: none;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  color: var(--brown);
+  transition: border-color var(--t-fast) linear, background-color var(--t-fast) linear;
+}
+
+.hdr__burger span {
+  display: block;
+  width: 19px;
+  height: 1px;
+  background: currentColor;
+  transition: transform var(--t-base) var(--ease), opacity var(--t-fast) linear;
+}
+
+.hdr__burger span + span {
+  margin-top: 5px;
+}
+
+.hdr__burger:hover {
+  border-color: var(--line-strong);
+  background: rgba(124, 50, 39, 0.04);
+}
+
+.hdr.is-open .hdr__burger span:first-child {
+  transform: translateY(3px) rotate(45deg);
+}
+
+.hdr.is-open .hdr__burger span:last-child {
+  transform: translateY(-3px) rotate(-45deg);
+}
+
+/* ============================================================
+   Menu mobile
+   ============================================================ */
+
+.mmenu {
+  position: fixed;
+  inset: 0;
+  z-index: 190;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: calc(var(--nav-h) + 12px);
+  padding-bottom: 30px;
+  overflow-y: auto;
+  background: var(--cream);
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--t-base) var(--ease), visibility var(--t-base) var(--ease);
+}
+
+.mmenu.is-open {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mmenu__nav {
+  padding-inline: var(--gutter);
+}
+
+.mmenu__list {
+  border-top: 1px solid var(--line-soft);
+}
+
+.mmenu__list li {
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.mmenu.is-open .mmenu__list li {
+  animation: mmenu-in 520ms var(--ease-out) both;
+  animation-delay: calc(var(--i) * 48ms + 60ms);
+}
+
+@keyframes mmenu-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.mmenu__link {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding-block: 20px;
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 7vw, 2.15rem);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--ink);
+  transition: color var(--t-fast) linear;
+}
+
+.mmenu__link:hover,
+.mmenu__link:focus-visible {
+  color: var(--pink-ink);
+}
+
+.mmenu__index {
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--pink-ink);
+  flex: none;
+  transform: translateY(-4px);
+}
+
+.mmenu__foot {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-inline: var(--gutter);
+  padding-top: 34px;
+}
+
+.mmenu__social {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brown);
+}
+
+.mmenu__social svg {
+  width: 17px;
+  height: 17px;
+}
+
+/* ============================================================
+   Responsivo
+   ============================================================ */
+
+@media (max-width: 1180px) {
+  .hdr__nav {
+    display: none;
+  }
+
+  .hdr__inner {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .hdr__burger {
+    display: grid;
+  }
+}
+
+/* Em telas estreitas o botão do header sai de cena: o menu mobile já oferece
+   a mesma ação. O seletor é mais específico que o .btn global de propósito. */
+
+@media (max-width: 640px) {
+  .hdr__actions .hdr__cta {
+    display: none;
+  }
+}
+
+@media (min-width: 1181px) {
+  .mmenu {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mmenu.is-open .mmenu__list li {
+    animation: none;
+  }
+}

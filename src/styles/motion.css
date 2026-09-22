@@ -1,0 +1,230 @@
+﻿/* ============================================================
+   ELIARTE & PAPEL — Motion system
+
+   Princípios únicos, aplicados a todas as seções:
+   - ease-out curto/médio
+   - deslocamentos pequenos (18–30px)
+   - opacity + transform (GPU)
+   - scale muito leve
+   - stagger por --reveal-delay / --d
+
+   Variantes:
+   - up / fade / scale / left / right  → entrada de texto e blocos
+   - clip                              → cortina para fotografias
+   - curtain                           → cortina descendente para títulos
+
+   Nunca: bounce, elastic, spin, zoom exagerado, elementos voando.
+   ============================================================ */
+
+/* ---------- 1. Entrada ao entrar no viewport ---------- */
+
+.reveal {
+  opacity: 0;
+  transition:
+    opacity var(--dur-md) var(--ease-out),
+    transform var(--dur-md) var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.reveal[data-fx='up'] {
+  transform: translate3d(0, 26px, 0);
+}
+
+.reveal[data-fx='fade'] {
+  transform: none;
+}
+
+.reveal[data-fx='scale'] {
+  transform: scale(0.94);
+}
+
+.reveal[data-fx='left'] {
+  transform: translate3d(-30px, 0, 0);
+}
+
+.reveal[data-fx='right'] {
+  transform: translate3d(30px, 0, 0);
+}
+
+/* Revelação por cortina: usada em fotografias e vídeos, sem fade.
+   O estado final abre a área de recorte para além da caixa, para não
+   cortar sombras nem elementos que transbordam de propósito. */
+.reveal[data-fx='clip'] {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path var(--dur-lg) var(--ease-out);
+  will-change: clip-path;
+}
+
+.reveal[data-fx='clip'].is-visible {
+  clip-path: inset(-100px);
+}
+
+/* Cortina descendente para títulos: o texto é revelado de cima para baixo,
+   com um leve avanço. O recorte final é generoso para não cortar acentos
+   nem descendentes. */
+.reveal[data-fx='curtain'] {
+  opacity: 1;
+  clip-path: inset(0 -6% 105% -6%);
+  transform: translate3d(0, 16px, 0);
+  transition: clip-path var(--dur-lg) var(--ease-out), transform var(--dur-lg) var(--ease-out);
+  will-change: clip-path, transform;
+}
+
+.reveal[data-fx='curtain'].is-visible {
+  clip-path: inset(-35% -6% -35% -6%);
+  transform: none;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+  /* Libera a camada de composição depois da entrada */
+  will-change: auto;
+}
+
+/* ---------- 2. Sequência de entrada acima da dobra ---------- */
+
+.enter {
+  opacity: 0;
+  animation-duration: var(--dur-md);
+  animation-timing-function: var(--ease-out);
+  animation-fill-mode: both;
+  animation-delay: var(--d, 0ms);
+  will-change: opacity, transform;
+}
+
+.enter[data-fx='up'] {
+  animation-name: fx-up;
+}
+
+.enter[data-fx='fade'] {
+  animation-name: fx-fade;
+}
+
+.enter[data-fx='scale'] {
+  animation-name: fx-scale;
+}
+
+.enter[data-fx='visual'] {
+  animation-name: fx-visual;
+  animation-duration: var(--dur-lg);
+}
+
+/* Todas com "to" explícito. Sem isso o navegador usa o valor da própria
+   regra (.enter { opacity: 0 }) como estado final — a animação iria de 0
+   para 0 e o elemento nunca apareceria. */
+
+@keyframes fx-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fx-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fx-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fx-visual {
+  from {
+    opacity: 0;
+    transform: scale(1.028) translate3d(0, 16px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- 3. Microinterações reutilizáveis ---------- */
+
+/* Traço que cresce a partir da esquerda */
+.draw-x {
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur-lg) var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.is-visible > .draw-x,
+.draw-x.is-visible {
+  transform: scaleX(1);
+}
+
+/* ---------- 4. Preferência por menos movimento ----------
+   A preferência pede menos movimento, não ausência de transição.
+   Aqui o deslocamento e as cortinas saem de cena, mas o fade permanece:
+   quem tem sensibilidade a movimento não vê nada deslizar, e o site
+   continua respondendo ao scroll em vez de parecer estático. */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    transform: none !important;
+    clip-path: none !important;
+    transition: opacity var(--dur-md) var(--ease-out) !important;
+  }
+
+  /* Variantes por cortina passam a ser um fade simples */
+  .reveal[data-fx='clip'],
+  .reveal[data-fx='curtain'] {
+    opacity: 0 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+
+  .reveal.is-visible {
+    opacity: 1 !important;
+  }
+
+  /* A sequência da primeira dobra vira fade, mantendo os atrasos */
+  .enter {
+    transform: none !important;
+    animation-name: fx-fade !important;
+    animation-duration: var(--dur-md) !important;
+  }
+
+  .enter[data-fx='visual'] {
+    animation-duration: var(--dur-lg) !important;
+  }
+
+  .draw-x {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .proc__step::before {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .works__progress span {
+    transition: none !important;
+  }
+}

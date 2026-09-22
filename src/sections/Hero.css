@@ -1,0 +1,163 @@
+/* ============================================================
+   Hero — composição editorial assimétrica
+   ============================================================ */
+
+.hero {
+  position: relative;
+  background: var(--cream);
+  padding-top: calc(var(--nav-h) + clamp(34px, 4.6vw, 76px));
+  padding-bottom: clamp(42px, 5.2vw, 82px);
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -18%;
+  right: -12%;
+  width: min(760px, 62vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(251, 101, 138, 0.16) 0%, transparent 68%);
+  pointer-events: none;
+}
+
+.hero__grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) auto;
+  gap: clamp(38px, 5vw, 86px);
+  align-items: center;
+}
+
+/* ---------- Texto ---------- */
+
+.hero__text {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 2.2vw, 30px);
+}
+
+.hero__title {
+  font-size: var(--fs-hero);
+  font-weight: var(--fw-display);
+  line-height: 1.04;
+  letter-spacing: var(--track-tight);
+  color: var(--ink);
+}
+
+.hero__title-accent {
+  display: inline;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--pink-deep);
+}
+
+.hero__subtitle {
+  font-size: var(--fs-lead);
+  line-height: 1.72;
+  color: var(--ink-soft);
+  max-width: 42ch;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 6px;
+}
+
+/* ---------- Visual ---------- */
+
+.hero__visual {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 14px;
+}
+
+.hero__note {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+  color: var(--brown-soft);
+}
+
+.hero__note span {
+  width: 30px;
+  height: 1px;
+  background: var(--pink);
+  flex: none;
+}
+
+/* A altura manda e a largura vem do formato do vídeo (3:4).
+   A moldura em si (passe-partout) vem da classe .mframe, em global.css. */
+
+.hero__frame {
+  height: var(--hero-media-h, clamp(330px, 60vh, 560px));
+  aspect-ratio: var(--hero-media-ratio, 3 / 4);
+}
+
+/* ---------- Faixa de categorias (marquee) ----------
+   A faixa vive em components/Marquee.css, logo abaixo desta seção. */
+
+/* ============================================================
+   Responsivo
+   ============================================================ */
+
+@media (max-width: 900px) {
+  .hero__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(36px, 7vw, 56px);
+  }
+
+  .hero__text {
+    order: 1;
+  }
+
+  .hero__visual {
+    order: 2;
+    align-items: stretch;
+  }
+
+  /* No celular o vídeo preenche a largura e a altura vem do formato */
+
+  .hero__frame {
+    align-self: center;
+    height: auto;
+    width: min(100%, 340px);
+  }
+}
+
+@media (max-width: 699px) {
+  .hero {
+    padding-top: calc(var(--nav-h) + 26px);
+  }
+
+  .hero__title {
+    font-size: clamp(2.35rem, 10.4vw, 3.1rem);
+  }
+
+  .hero__note {
+    justify-content: flex-start;
+  }
+
+  .hero__frame {
+    width: min(82vw, 320px);
+  }
+
+  .hero__actions {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .hero__actions .btn {
+    width: 100%;
+  }
+}

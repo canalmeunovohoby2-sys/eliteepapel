@@ -1,0 +1,335 @@
+/* ============================================================
+   Carrossel de trabalhos
+
+   Geometria pensada para fotografia VERTICAL.
+
+   O problema: uma foto de produto com quase toda a largura da tela vira uma
+   imagem de mais de 1300px de altura — não cabe e não se vê a peça inteira.
+   A solução: a altura manda, e a largura é derivada dela (3:4, o formato das
+   fotos). Assim a peça aparece sempre inteira, em altura confortável.
+
+   Composição: a foto ativa fica centralizada, com a anterior e a seguinte
+   flanqueando em simetria. No celular a largura cai para 78vw, o que
+   naturalmente vira 1 foto por vez com uma pequena prévia ao lado.
+
+   A moldura rosa marca a foto ativa — o rosa como indicador, nunca como
+   decoração. Nenhuma legenda é sobreposta às imagens.
+   ============================================================ */
+
+.works {
+  /* Recuo que alinha a faixa com a coluna de conteúdo do site */
+  --works-inset: max(var(--gutter), calc((100% - var(--container)) / 2 + var(--gutter)));
+  --works-gap: clamp(16px, 1.8vw, 28px);
+  /* Altura define o tamanho; a largura vem do formato 3:4 das fotos */
+  --works-slide-h: clamp(300px, 56vh, 540px);
+  --works-slide-w: calc(var(--works-slide-h) * 0.75);
+  --works-edge: var(--paper);
+}
+
+.works__stage {
+  position: relative;
+}
+
+.works__track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--works-gap);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--works-inset);
+  padding-inline: var(--works-inset);
+  padding-block: 10px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overscroll-behavior-x: contain;
+}
+
+.works__track::-webkit-scrollbar {
+  display: none;
+}
+
+.works__track:focus-visible {
+  outline: 2px solid var(--pink-deep);
+  outline-offset: -8px;
+}
+
+/* A foto ativa encosta na coluna de conteúdo, alinhada com o título da seção —
+   a mesma posição em todos os índices. A seguinte aparece como prévia. */
+
+.works__slide {
+  flex: 0 0 auto;
+  width: var(--works-slide-w);
+  scroll-snap-align: start;
+}
+
+.works__open {
+  position: relative;
+  display: block;
+  width: 100%;
+  cursor: zoom-in;
+}
+
+/* Moldura de fio único: profundidade sem sombra cortada pelo scroll */
+
+.works__media {
+  border: 1px solid rgba(124, 50, 39, 0.14);
+  transition: border-color var(--dur-md) var(--ease-out);
+}
+
+/* A foto centralizada é a atual: fio rosa como indicador */
+
+.works__slide.is-active .works__media {
+  border-color: rgba(251, 101, 138, 0.6);
+}
+
+.works__open .media__img {
+  transition: transform 900ms var(--ease-out);
+}
+
+.works__open:hover .media__img,
+.works__open:focus-visible .media__img {
+  transform: scale(1.015);
+}
+
+/* ---------- Convite para ampliar ---------- */
+
+.works__hint {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 15px;
+  border-radius: var(--r-pill);
+  background: rgba(45, 17, 12, 0.55);
+  color: var(--on-dark);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity var(--t-base) var(--ease), transform var(--t-base) var(--ease);
+}
+
+.works__open:hover .works__hint,
+.works__open:focus-visible .works__hint {
+  opacity: 1;
+  transform: none;
+}
+
+/* Ícone sempre visível no toque, onde não existe hover */
+
+.works__icon {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  display: none;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--r-pill);
+  background: rgba(45, 17, 12, 0.5);
+  color: var(--on-dark);
+}
+
+.works__icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ---------- Degradês das bordas ----------
+   Quando a tela é estreita, as fotos vizinhas encostam na borda:
+   o degradê evita o corte a seco. */
+
+.works__edge {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: clamp(36px, 5vw, 110px);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.works__edge--left {
+  left: 0;
+  background: linear-gradient(90deg, var(--works-edge), transparent);
+}
+
+.works__edge--right {
+  right: 0;
+  background: linear-gradient(270deg, var(--works-edge), transparent);
+}
+
+/* ---------- Barra de controle ----------
+   Uma linha só: contador à esquerda, setas à direita. */
+
+.works__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: clamp(22px, 2.4vw, 32px);
+  padding-inline: var(--works-inset);
+}
+
+.works__counter {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.works__counter i {
+  font-style: normal;
+  font-weight: 400;
+  color: var(--line-strong);
+}
+
+.works__counter span:last-child {
+  color: var(--ink-mute);
+}
+
+.works__arrows {
+  display: flex;
+  gap: 10px;
+}
+
+.works__arrow {
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  color: var(--brown);
+  transition: background-color var(--t-fast) linear, border-color var(--t-fast) linear,
+    color var(--t-fast) linear, opacity var(--t-base) linear;
+}
+
+.works__arrow svg {
+  width: 19px;
+  height: 19px;
+  transition: transform var(--t-base) var(--ease);
+}
+
+.works__arrow:hover:not(:disabled) {
+  border-color: transparent;
+  background: var(--brown);
+  color: var(--on-dark);
+}
+
+.works__arrow:first-child:hover:not(:disabled) svg {
+  transform: translateX(-2px);
+}
+
+.works__arrow:last-child:hover:not(:disabled) svg {
+  transform: translateX(2px);
+}
+
+.works__arrow:disabled {
+  opacity: 0.28;
+  cursor: not-allowed;
+}
+
+/* Fio de progresso alinhado à coluna de conteúdo */
+
+.works__progress {
+  position: relative;
+  height: 1px;
+  margin-top: clamp(18px, 2vw, 26px);
+  margin-inline: var(--works-inset);
+  background: var(--line);
+  overflow: hidden;
+}
+
+.works__progress span {
+  display: block;
+  height: 100%;
+  background: var(--pink);
+  transform-origin: left center;
+  transition: transform 620ms var(--ease-out);
+}
+
+/* ---------- Placeholder dentro do lightbox ---------- */
+
+.works__ph {
+  display: grid;
+  place-items: center;
+  width: min(72vw, 500px);
+  height: min(72vh, 620px);
+  border: 1px dashed rgba(255, 248, 245, 0.24);
+  border-radius: var(--r-xs);
+  background: linear-gradient(150deg, #4a1e16 0%, #2c110c 100%);
+}
+
+.works__ph span {
+  padding: 10px 18px;
+  border: 1px dashed rgba(255, 248, 245, 0.28);
+  border-radius: var(--r-pill);
+  font-size: 0.63rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--on-dark-mute);
+  text-align: center;
+}
+
+/* ============================================================
+   Responsivo
+   ============================================================ */
+
+/* No celular a largura em vw vence, dando 1 foto por vez com prévia */
+
+@media (max-width: 700px) {
+  .works {
+    --works-gap: 12px;
+    --works-slide-w: 78vw;
+  }
+
+  .works__hint {
+    display: none;
+  }
+
+  .works__icon {
+    display: grid;
+  }
+
+  .works__edge {
+    width: 28px;
+  }
+
+  .works__arrow {
+    width: 54px;
+    height: 54px;
+  }
+
+  .works__ph {
+    width: 84vw;
+    height: min(62vh, 520px);
+  }
+}
+
+@media (pointer: coarse) {
+  .works__hint {
+    display: none;
+  }
+
+  .works__icon {
+    display: grid;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .works__progress span,
+  .works__open .media__img,
+  .works__media {
+    transition: none;
+  }
+}
