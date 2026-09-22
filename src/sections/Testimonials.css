@@ -42,12 +42,6 @@
   align-items: start;
 }
 
-/* Colunas desalinhadas de propósito: composição, não grade */
-
-.tst__item:nth-child(2) {
-  margin-top: clamp(0px, 3.4vw, 54px);
-}
-
 .tst__item {
   position: relative;
   padding-top: clamp(24px, 2.6vw, 36px);
@@ -122,10 +116,6 @@
   .tst__list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: clamp(30px, 5vw, 44px);
-  }
-
-  .tst__item:nth-child(2) {
-    margin-top: 0;
   }
 
   /* Terceiro item ocupa a linha inteira, como fecho */
